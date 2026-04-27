@@ -88,7 +88,7 @@
       <p>Para participar da atividade, o aluno precisa entrar com uma conta Google. Depois do login, a página libera postagens, comentários e curtidas.</p>
       <button class="google-btn" onclick="signInGoogle()">Entrar com Google</button>
       <div class="config-warning">
-        <strong>Atenção, professora:</strong> este arquivo já está pronto para o GitHub Pages, mas você precisa colar os dados do seu projeto Firebase em <strong>firebaseConfig</strong>. Também é necessário ativar Google Authentication e Cloud Firestore no Firebase.
+        <strong>Atenção, professora:</strong> este arquivo já está com a configuração do Firebase inserida para o projeto <strong>rede-consciente</strong>. Ainda é necessário conferir o domínio autorizado e ativar/configurar o Cloud Firestore.
       </div>
       <div class="github-note">
         <strong>Para GitHub Pages:</strong> salve este arquivo com o nome <strong>index.html</strong>. Depois de publicar, autorize o domínio <strong>SEU_USUARIO.github.io</strong> no Firebase Authentication.
@@ -215,12 +215,13 @@
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "COLE_AQUI_SUA_API_KEY",
-      authDomain: "COLE_AQUI_SEU_PROJETO.firebaseapp.com",
-      projectId: "COLE_AQUI_SEU_PROJECT_ID",
-      storageBucket: "COLE_AQUI_SEU_PROJETO.appspot.com",
-      messagingSenderId: "COLE_AQUI_SEU_MESSAGING_SENDER_ID",
-      appId: "COLE_AQUI_SEU_APP_ID"
+      apiKey: "AIzaSyAc_twc3-rncbIVDncXcJZXmu4wTU_Esuo",
+      authDomain: "rede-consciente.firebaseapp.com",
+      projectId: "rede-consciente",
+      storageBucket: "rede-consciente.firebasestorage.app",
+      messagingSenderId: "566015597932",
+      appId: "1:566015597932:web:91b26a3aaf6ad2346d6749",
+      measurementId: "G-Y73M891QGH"
     };
 
     const firebaseApp = initializeApp(firebaseConfig);
@@ -254,7 +255,7 @@
 
     window.signInGoogle = async function () {
       if (!firebaseConfigured()) {
-        showLoginMessage('Antes do login funcionar, cole a configuração real do Firebase no arquivo index.html.', 'error');
+        showLoginMessage('A configuração do Firebase foi inserida. Se o login falhar, confira Domínios autorizados no Firebase e a publicação no GitHub Pages.', 'error');
         return;
       }
       try {

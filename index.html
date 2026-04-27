@@ -285,9 +285,33 @@
     }
 
     function detectRisk(text) {
-      const riskyWords = ['cpf','rg','senha','endereço','telefone','whatsapp','localização','onde moro','data de nascimento','renda','cartão','documento','e-mail pessoal'];
-      const lower = text.toLowerCase();
-      return riskyWords.filter(word => lower.includes(word));
+      /*
+        Detecção mais cuidadosa de dados pessoais.
+        Antes, a busca simples por "rg" gerava falso alerta em palavras como "órgão".
+        Agora, usamos padrões com limites de palavra e normalização de acentos.
+      */
+      const normalized = text
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+      const patterns = [
+        { label: 'CPF', regex: /\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/ },
+        { label: 'RG', regex: /\brg\b|\bregistro geral\b/ },
+        { label: 'senha', regex: /\bsenha(s)?\b/ },
+        { label: 'endereço', regex: /\bendereco\b|\bonde moro\b|\bminha casa\b/ },
+        { label: 'telefone', regex: /\btelefone\b|\bwhatsapp\b|\bcelular\b|\b\(?\d{2}\)?\s?9?\d{4}-?\d{4}\b/ },
+        { label: 'localização', regex: /\blocalizacao\b|\blocal exato\b/ },
+        { label: 'data de nascimento', regex: /\bdata de nascimento\b|\bnascimento\b/ },
+        { label: 'renda', regex: /\brenda\b|\bsalario\b/ },
+        { label: 'cartão', regex: /\bcartao\b|\bnumero do cartao\b/ },
+        { label: 'documento', regex: /\bnumero do documento\b|\bdocumento pessoal\b/ },
+        { label: 'e-mail pessoal', regex: /\be-mail pessoal\b|\bemail pessoal\b/ }
+      ];
+
+      return patterns
+        .filter(item => item.regex.test(normalized))
+        .map(item => item.label);
     }
 
     function createPost() {
@@ -303,7 +327,7 @@
 
       if (!author || !topic || !title || !content || !source || !classification) { showMessage('⚠️ Complete todos os campos antes de publicar.', 'error'); return; }
       if (!checks.every(Boolean)) { showMessage('⚠️ Revise o checklist. Uma postagem responsável precisa passar por todos os critérios.', 'error'); return; }
-      const risks = detectRisk(content + ' ' + title + ' ' + source);
+      const risks = detectRisk(content + ' ' + title);
       if (risks.length > 0) { showMessage('🚨 Atenção: sua postagem parece conter dado pessoal ou sensível: ' + risks.join(', ') + '. Revise antes de publicar.', 'error'); return; }
 
       const post = {

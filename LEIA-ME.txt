@@ -1,0 +1,8 @@
+REDE CONSCIENTE - VERSAO SEM FIRESTORE
+
+1. Envie o arquivo index.html para o repositorio do GitHub.
+2. Ative o GitHub Pages em Settings > Pages.
+3. No Firebase Authentication, mantenha Google ativado.
+4. Em Authentication > Configuracoes > Dominios autorizados, adicione luftjacson.github.io.
+5. Esta versao nao usa Firestore e nao exige faturamento.
+6. As respostas ficam salvas no navegador em que a atividade foi feita. Use o botao Exportar respostas em CSV ao final da aula.

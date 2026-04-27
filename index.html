@@ -88,7 +88,7 @@
       <p>Para participar da atividade, o aluno precisa entrar com uma conta Google. Depois do login, a página libera postagens, comentários e curtidas.</p>
       <button class="google-btn" onclick="signInGoogle()">Entrar com Google</button>
       <div class="config-warning">
-        <strong>Atenção, professora:</strong> este arquivo já está com a configuração do Firebase inserida para o projeto <strong>rede-consciente</strong>. Ainda é necessário conferir o domínio autorizado e ativar/configurar o Cloud Firestore.
+        <strong>Atenção, professora:</strong> este arquivo já está com a configuração do Firebase inserida para o projeto <strong>rede-consciente</strong>. Não é necessário ativar Firestore. Esta versão salva as respostas no navegador e permite exportar em CSV.
       </div>
       <div class="github-note">
         <strong>Para GitHub Pages:</strong> salve este arquivo com o nome <strong>index.html</strong>. Depois de publicar, autorize o domínio <strong>SEU_USUARIO.github.io</strong> no Firebase Authentication.
@@ -110,7 +110,7 @@
   <main id="app" class="container">
     <section class="card">
       <h2>✍️ Criar postagem</h2>
-      <small>Atividade: produza um post informativo, cite a fonte e cuide para não expor dados pessoais ou sensíveis. As respostas ficam salvas no Firebase.</small>
+      <small>Atividade: produza um post informativo, cite a fonte e cuide para não expor dados pessoais ou sensíveis. As respostas ficam salvas neste navegador e podem ser exportadas em CSV ao final da atividade.</small>
 
       <label for="author">Nome do aluno</label>
       <input id="author" type="text" placeholder="Será preenchido pelo login Google" readonly />
@@ -159,36 +159,23 @@
         <span class="badge" id="counter">0 postagens</span>
       </div>
       <div id="feed" class="feed">
-        <div class="empty">Carregando postagens da turma...</div>
+        <div class="empty">Nenhuma postagem ainda. Crie o primeiro post consciente da turma.</div>
       </div>
     </section>
   </main>
 
   <script type="module">
     /*
-      ARQUIVO PRONTO PARA GITHUB PAGES
+      ARQUIVO PRONTO PARA GITHUB PAGES, SEM FIRESTORE
       1. Renomeie para index.html.
       2. Publique no GitHub Pages.
-      3. No Firebase, adicione SEU_USUARIO.github.io em Authentication > Settings > Authorized domains.
-      4. No Firebase, ative Authentication > Sign-in method > Google.
-      5. No Firebase, ative Firestore Database.
-      6. Cole abaixo a configuração do seu app Web.
+      3. No Firebase, adicione SEU_USUARIO.github.io em Authentication > Configurações > Domínios autorizados.
+      4. No Firebase, mantenha Authentication > Método de login > Google ativado.
 
-      REGRAS SUGERIDAS PARA O FIRESTORE, PARA TESTE ESCOLAR:
-      rules_version = '2';
-      service cloud.firestore {
-        match /databases/{database}/documents {
-          match /posts/{postId} {
-            allow read: if request.auth != null;
-            allow create: if request.auth != null;
-            allow update: if request.auth != null;
-            allow delete: if request.auth != null && (
-              request.auth.token.email == resource.data.authorEmail
-              || request.auth.token.email in ['COLOQUE_SEU_EMAIL_AQUI@gmail.com']
-            );
-          }
-        }
-      }
+      Observação importante:
+      Esta versão NÃO usa Firestore, porque a criação do banco exigiu faturamento.
+      As postagens ficam salvas no navegador em localStorage.
+      Para recolher as respostas, use o botão "Exportar respostas em CSV" no mesmo computador/navegador em que a atividade foi realizada.
     */
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
@@ -199,20 +186,6 @@
       signOut,
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      deleteDoc,
-      doc,
-      updateDoc,
-      onSnapshot,
-      query,
-      orderBy,
-      serverTimestamp,
-      increment,
-      arrayUnion
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAc_twc3-rncbIVDncXcJZXmu4wTU_Esuo",
@@ -226,21 +199,12 @@
 
     const firebaseApp = initializeApp(firebaseConfig);
     const auth = getAuth(firebaseApp);
-    const db = getFirestore(firebaseApp);
     const provider = new GoogleAuthProvider();
 
-    // Opcional: se quiser permitir apenas e-mails de um domínio institucional, preencha abaixo.
-    // Exemplo: const ALLOWED_EMAIL_DOMAIN = "@escola.pr.gov.br";
     const ALLOWED_EMAIL_DOMAIN = "";
-
-    // Opcional: coloque aqui o seu e-mail para poder apagar qualquer postagem.
-    const TEACHER_EMAILS = [
-      // "seuemail@gmail.com"
-    ];
 
     window.currentGoogleUser = null;
     window.posts = [];
-    let unsubscribePosts = null;
 
     function showLoginMessage(text, type) {
       const box = document.getElementById('loginMessage');
@@ -249,15 +213,7 @@
       box.style.display = 'block';
     }
 
-    function firebaseConfigured() {
-      return !firebaseConfig.apiKey.includes('COLE_AQUI') && !firebaseConfig.projectId.includes('COLE_AQUI');
-    }
-
     window.signInGoogle = async function () {
-      if (!firebaseConfigured()) {
-        showLoginMessage('A configuração do Firebase foi inserida. Se o login falhar, confira Domínios autorizados no Firebase e a publicação no GitHub Pages.', 'error');
-        return;
-      }
       try {
         await signInWithPopup(auth, provider);
       } catch (error) {
@@ -292,60 +248,34 @@
         photo.src = user.photoURL || '';
         photo.style.display = user.photoURL ? 'block' : 'none';
         if (authorInput) authorInput.value = user.displayName || user.email || 'Usuário logado';
-        listenPosts();
+        if (window.loadLocalPosts) window.loadLocalPosts();
+        if (window.renderPosts) window.renderPosts();
       } else {
         window.currentGoogleUser = null;
         loginScreen.style.display = 'flex';
         authBar.style.display = 'none';
         appArea.style.display = 'none';
         if (authorInput) authorInput.value = '';
-        if (unsubscribePosts) unsubscribePosts();
       }
     });
-
-    function listenPosts() {
-      if (!firebaseConfigured()) return;
-      if (unsubscribePosts) unsubscribePosts();
-      const postsQuery = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
-      unsubscribePosts = onSnapshot(postsQuery, (snapshot) => {
-        window.posts = snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }));
-        window.renderPosts();
-      }, (error) => {
-        console.error(error);
-        document.getElementById('feed').innerHTML = '<div class="empty">Não foi possível carregar as postagens. Confira as regras do Firestore.</div>';
-      });
-    }
-
-    window.savePostToFirestore = async function (postData) {
-      return addDoc(collection(db, 'posts'), {
-        ...postData,
-        likes: 0,
-        comments: [],
-        createdAt: serverTimestamp()
-      });
-    };
-
-    window.likePostFirestore = async function (id) {
-      return updateDoc(doc(db, 'posts', id), { likes: increment(1) });
-    };
-
-    window.addCommentFirestore = async function (id, commentData) {
-      return updateDoc(doc(db, 'posts', id), { comments: arrayUnion(commentData) });
-    };
-
-    window.removePostFirestore = async function (id, authorEmail) {
-      const user = window.currentGoogleUser;
-      const isOwner = user && user.email === authorEmail;
-      const isTeacher = user && TEACHER_EMAILS.includes(user.email);
-      if (!isOwner && !isTeacher) {
-        alert('Apenas o autor da postagem ou a professora pode apagar esta resposta.');
-        return;
-      }
-      return deleteDoc(doc(db, 'posts', id));
-    };
   </script>
 
   <script>
+    const STORAGE_KEY = 'redeConscientePosts_v1';
+
+    function loadLocalPosts() {
+      try {
+        window.posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (error) {
+        console.error(error);
+        window.posts = [];
+      }
+    }
+
+    function saveLocalPosts() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(window.posts || []));
+    }
+
     function showMessage(text, type) {
       const box = document.getElementById('message');
       box.textContent = text;
@@ -360,7 +290,7 @@
       return riskyWords.filter(word => lower.includes(word));
     }
 
-    async function createPost() {
+    function createPost() {
       if (!window.currentGoogleUser) { showMessage('⚠️ Faça login com Google antes de responder.', 'error'); return; }
       const user = window.currentGoogleUser;
       const author = user.displayName || user.email || document.getElementById('author').value.trim();
@@ -376,17 +306,25 @@
       const risks = detectRisk(content + ' ' + title + ' ' + source);
       if (risks.length > 0) { showMessage('🚨 Atenção: sua postagem parece conter dado pessoal ou sensível: ' + risks.join(', ') + '. Revise antes de publicar.', 'error'); return; }
 
-      try {
-        await window.savePostToFirestore({
-          author, authorEmail: user.email || '', topic, title, content, source, classification,
-          time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
-        });
-        clearForm();
-        showMessage('✅ Post publicado e salvo com responsabilidade!', 'ok');
-      } catch (error) {
-        console.error(error);
-        showMessage('⚠️ Não foi possível salvar. Confira se o Firestore está ativado e com regras corretas.', 'error');
-      }
+      const post = {
+        id: String(Date.now()),
+        author,
+        authorEmail: user.email || '',
+        topic,
+        title,
+        content,
+        source,
+        classification,
+        likes: 0,
+        comments: [],
+        time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+      };
+
+      window.posts.unshift(post);
+      saveLocalPosts();
+      renderPosts();
+      clearForm();
+      showMessage('✅ Post publicado neste navegador. Ao final, use “Exportar respostas em CSV”.', 'ok');
     }
 
     function clearForm() {
@@ -460,9 +398,12 @@
         </article>`).join('');
     }
 
-    async function likePost(id) {
+    function likePost(id) {
       if (!window.currentGoogleUser) { showMessage('⚠️ Faça login para curtir.', 'error'); return; }
-      try { await window.likePostFirestore(id); } catch (error) { console.error(error); showMessage('⚠️ Não foi possível curtir.', 'error'); }
+      const post = (window.posts || []).find(p => p.id === id);
+      if (post) post.likes = (post.likes || 0) + 1;
+      saveLocalPosts();
+      renderPosts();
     }
 
     function toggleComment(id) {
@@ -470,21 +411,59 @@
       if (area) area.style.display = area.style.display === 'block' ? 'none' : 'block';
     }
 
-    async function addComment(id) {
+    function addComment(id) {
       if (!window.currentGoogleUser) { showMessage('⚠️ Faça login com Google antes de comentar.', 'error'); return; }
       const input = document.getElementById('comment-input-' + id);
       const text = input.value.trim();
       if (!text) return;
       const user = window.currentGoogleUser;
-      try {
-        await window.addCommentFirestore(id, { author: user.displayName || user.email || 'Usuário logado', email: user.email || '', text, time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) });
-        input.value = '';
-      } catch (error) { console.error(error); showMessage('⚠️ Não foi possível comentar.', 'error'); }
+      const post = (window.posts || []).find(p => p.id === id);
+      if (post) {
+        post.comments.push({ author: user.displayName || user.email || 'Usuário logado', email: user.email || '', text, time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) });
+        saveLocalPosts();
+        renderPosts();
+        setTimeout(() => toggleComment(id), 0);
+      }
     }
 
-    async function removePost(id, authorEmail) {
+    function removePost(id, authorEmail) {
+      if (!window.currentGoogleUser) { showMessage('⚠️ Faça login antes de apagar.', 'error'); return; }
+      if (window.currentGoogleUser.email !== authorEmail) {
+        alert('Apenas o autor da postagem pode apagar esta resposta nesta versão sem banco de dados.');
+        return;
+      }
       if (!confirm('Tem certeza que deseja apagar esta postagem?')) return;
-      try { await window.removePostFirestore(id, authorEmail); } catch (error) { console.error(error); showMessage('⚠️ Não foi possível apagar. Verifique as regras do Firestore.', 'error'); }
+      window.posts = (window.posts || []).filter(p => p.id !== id);
+      saveLocalPosts();
+      renderPosts();
+    }
+
+    function exportCSV() {
+      const posts = window.posts || [];
+      if (posts.length === 0) { showMessage('⚠️ Não há respostas para exportar.', 'error'); return; }
+      const rows = [["data_hora","nome","email","tema","titulo","mensagem","fonte","classificacao","curtidas","comentarios"]];
+      posts.forEach(post => {
+        const comments = (post.comments || []).map(c => `${c.author || ''}: ${c.text || ''}`).join(' | ');
+        rows.push([post.time || '', post.author || '', post.authorEmail || '', post.topic || '', post.title || '', post.content || '', post.source || '', post.classification || '', String(post.likes || 0), comments]);
+      });
+      const csv = rows.map(row => row.map(value => '"' + String(value).replaceAll('"','""') + '"').join(';')).join('
+');
+      const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'respostas_rede_consciente.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showMessage('✅ Arquivo CSV gerado.', 'ok');
+    }
+
+    function clearAllPosts() {
+      if (!confirm('Isso apagará as postagens salvas neste navegador. Deseja continuar?')) return;
+      window.posts = [];
+      saveLocalPosts();
+      renderPosts();
+      showMessage('✅ Feed limpo neste navegador.', 'ok');
     }
 
     function escapeHtml(text) {
@@ -492,8 +471,10 @@
     }
 
     function escapeForJs(text) {
-      return String(text).replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+      return String(text).replaceAll('\', '\\').replaceAll("'", "\'");
     }
+
+    loadLocalPosts();
   </script>
 </body>
 </html>

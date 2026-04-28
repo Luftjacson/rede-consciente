@@ -10,99 +10,78 @@
     header { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; padding: 22px 16px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
     header h1 { font-size: 2rem; margin-bottom: 6px; }
     header p { font-size: 1rem; opacity: 0.95; }
+    .login-screen { min-height: calc(100vh - 92px); display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .login-card { width: min(560px, 100%); background: white; border-radius: 24px; padding: 28px; box-shadow: 0 12px 32px rgba(31,41,55,.18); border: 1px solid #dbe4ee; text-align: center; }
+    .login-card h2 { font-size: 1.55rem; margin-bottom: 10px; color: #111827; }
+    .login-card p { color: #475569; line-height: 1.45; margin-bottom: 14px; }
+    .google-btn, .btn { width: 100%; border: none; border-radius: 14px; padding: 13px 16px; margin-top: 14px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: .2s; }
+    .google-btn { border: 1px solid #cbd5e1; background: white; color: #1f2937; }
+    .google-btn:hover, .btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    .btn { background: #16a34a; color: white; }
+    .btn-secondary { background: #334155; color: white; }
+    .btn-danger { background: #991b1b; color: white; }
     .container { max-width: 1180px; margin: 22px auto; padding: 0 14px 30px; display: grid; grid-template-columns: 360px 1fr; gap: 20px; }
-    .card { background: white; border-radius: 18px; padding: 18px; box-shadow: 0 6px 18px rgba(31,41,55,0.12); border: 1px solid #dbe4ee; }
+    .card, .post, .empty { background: white; border-radius: 18px; padding: 18px; box-shadow: 0 6px 18px rgba(31,41,55,.12); border: 1px solid #dbe4ee; }
     .card h2 { font-size: 1.25rem; margin-bottom: 10px; color: #111827; }
     .card small { display: block; color: #64748b; margin-bottom: 14px; line-height: 1.35; }
     label { display: block; font-weight: bold; margin: 12px 0 5px; color: #334155; }
-    input, textarea, select { width: 100%; padding: 10px 11px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.98rem; outline: none; background: #f8fafc; }
+    input, textarea, select { width: 100%; padding: 10px 11px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: .98rem; outline: none; background: #f8fafc; }
     textarea { min-height: 86px; resize: vertical; }
-    input:focus, textarea:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); background: white; }
+    input:focus, textarea:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); background: white; }
     .checklist { margin-top: 12px; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 14px; padding: 12px; }
     .checklist h3 { font-size: 1rem; margin-bottom: 8px; }
-    .check-item { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; line-height: 1.25; font-size: 0.94rem; }
+    .check-item { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; line-height: 1.25; font-size: .94rem; }
     .check-item input { width: auto; margin-top: 2px; }
-    .btn { width: 100%; border: none; border-radius: 14px; padding: 13px 16px; margin-top: 14px; background: #16a34a; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; }
-    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
-    .btn-secondary { background: #334155; }
-    .btn-danger { background: #dc2626; }
     .alert { margin-top: 12px; padding: 10px 12px; border-radius: 12px; font-weight: bold; display: none; line-height: 1.35; }
     .alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
     .alert.ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-    .feed-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
-    .feed-top h2 { margin: 0; }
-    .badge { background: #e0e7ff; color: #3730a3; padding: 7px 10px; border-radius: 999px; font-weight: bold; font-size: 0.85rem; }
-    .post { background: white; border-radius: 20px; padding: 16px; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(31,41,55,0.10); border: 1px solid #e2e8f0; overflow: hidden; }
-    .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#f97316,#ec4899); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: bold; flex-shrink: 0; }
-    .post-user { font-weight: bold; color: #0f172a; }
-    .post-time { color: #64748b; font-size: 0.85rem; margin-top: 2px; }
-    .post-title { font-size: 1.35rem; color: #111827; margin-bottom: 8px; line-height: 1.2; }
-    .post-topic { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; border-radius: 999px; padding: 5px 10px; margin-bottom: 10px; font-size: 0.86rem; font-weight: bold; }
-    .post-text { line-height: 1.45; margin-bottom: 12px; color: #334155; white-space: pre-wrap; }
-    .source-box { background: #f8fafc; border-left: 5px solid #2563eb; padding: 10px 12px; border-radius: 10px; margin-bottom: 10px; color: #334155; line-height: 1.3; }
-    .analysis-line { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
-    .tag { padding: 7px 10px; border-radius: 999px; font-weight: bold; font-size: 0.85rem; }
-    .tag.fato { background: #dcfce7; color: #166534; }
-    .tag.mito { background: #fee2e2; color: #991b1b; }
-    .tag.parcial { background: #fef3c7; color: #92400e; }
-    .tag.safe { background: #e0f2fe; color: #075985; }
-    .actions { display: flex; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 10px; margin-top: 12px; flex-wrap: wrap; }
-    .action-btn { border: none; background: #f1f5f9; color: #334155; border-radius: 12px; padding: 8px 10px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .action-btn:hover { background: #e2e8f0; }
-    .comment-area { display: none; margin-top: 12px; }
-    .comment-list { margin-top: 8px; display: grid; gap: 8px; }
-    .comment { background: #f8fafc; padding: 8px 10px; border-radius: 12px; color: #475569; }
-    .teacher-panel { margin-top: 14px; background: #fff7ed; border: 1px solid #fed7aa; color: #7c2d12; border-radius: 14px; padding: 12px; line-height: 1.4; font-size: 0.94rem; }
-    .teacher-panel strong { color: #9a3412; }
-    .empty { text-align: center; color: #64748b; padding: 40px 18px; background: white; border-radius: 18px; border: 2px dashed #cbd5e1; }
-    .help-box { margin-top: 16px; background: #eff6ff; color: #1e3a8a; border-radius: 16px; padding: 14px; line-height: 1.35; border: 1px solid #bfdbfe; }
-    .help-box h3 { margin-bottom: 8px; font-size: 1rem; }
-    .login-screen { min-height: calc(100vh - 92px); display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .login-card { width: min(560px, 100%); background: white; border-radius: 24px; padding: 28px; box-shadow: 0 12px 32px rgba(31,41,55,0.18); border: 1px solid #dbe4ee; text-align: center; }
-    .login-card h2 { font-size: 1.55rem; color: #111827; margin-bottom: 10px; }
-    .login-card p { color: #475569; line-height: 1.45; margin-bottom: 14px; }
-    .google-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 1px solid #cbd5e1; background: #ffffff; color: #1f2937; border-radius: 14px; padding: 13px 16px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; margin-top: 10px; }
-    .google-btn:hover { background: #f8fafc; transform: translateY(-1px); }
     .auth-bar { max-width: 1180px; margin: 16px auto 0; padding: 0 14px; display: none; }
-    .auth-box { background: white; border: 1px solid #dbe4ee; border-radius: 16px; padding: 10px 14px; box-shadow: 0 4px 12px rgba(31,41,55,0.10); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .auth-box { background: white; border: 1px solid #dbe4ee; border-radius: 16px; padding: 10px 14px; box-shadow: 0 4px 12px rgba(31,41,55,.10); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .user-info { display: flex; align-items: center; gap: 10px; color: #334155; font-weight: bold; }
     .user-photo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; }
     .logout-btn { border: none; background: #fee2e2; color: #991b1b; border-radius: 12px; padding: 8px 12px; font-weight: bold; cursor: pointer; }
-    .logout-btn:hover { background: #fecaca; }
     #app { display: none; }
-    .config-warning { margin-top: 12px; background: #fff7ed; border: 1px solid #fed7aa; color: #7c2d12; border-radius: 14px; padding: 12px; line-height: 1.35; font-size: 0.94rem; text-align: left; }
-    .github-note { margin-top: 12px; background: #f8fafc; border: 1px solid #cbd5e1; color: #334155; border-radius: 14px; padding: 12px; line-height: 1.35; font-size: 0.9rem; text-align: left; }
+    .feed-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
+    .badge { background: #e0e7ff; color: #3730a3; padding: 7px 10px; border-radius: 999px; font-weight: bold; font-size: .85rem; }
+    .post { border-radius: 20px; margin-bottom: 16px; overflow: hidden; }
+    .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ec4899); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: bold; flex-shrink: 0; }
+    .post-user { font-weight: bold; color: #0f172a; }
+    .post-time { color: #64748b; font-size: .85rem; margin-top: 2px; }
+    .post-title { font-size: 1.35rem; color: #111827; margin-bottom: 8px; line-height: 1.2; }
+    .post-topic { display: inline-block; background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; border-radius: 999px; padding: 5px 10px; margin-bottom: 10px; font-size: .86rem; font-weight: bold; }
+    .post-text { line-height: 1.45; margin-bottom: 12px; color: #334155; white-space: pre-wrap; }
+    .source-box { background: #f8fafc; border-left: 5px solid #2563eb; padding: 10px 12px; border-radius: 10px; margin-bottom: 10px; color: #334155; line-height: 1.3; }
+    .analysis-line { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .tag { padding: 7px 10px; border-radius: 999px; font-weight: bold; font-size: .85rem; }
+    .tag.fato { background: #dcfce7; color: #166534; } .tag.mito { background: #fee2e2; color: #991b1b; } .tag.parcial { background: #fef3c7; color: #92400e; } .tag.safe { background: #e0f2fe; color: #075985; }
+    .teacher-panel { margin-top: 14px; background: #fff7ed; border: 1px solid #fed7aa; color: #7c2d12; border-radius: 14px; padding: 12px; line-height: 1.4; font-size: .94rem; }
+    .actions { display: flex; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .action-btn { border: none; background: #f1f5f9; color: #334155; border-radius: 12px; padding: 8px 10px; font-weight: bold; cursor: pointer; }
+    .comment-area { display: none; margin-top: 12px; }
+    .comment-list { margin-top: 8px; display: grid; gap: 8px; }
+    .comment { background: #f8fafc; padding: 8px 10px; border-radius: 12px; color: #475569; }
+    .empty { text-align: center; color: #64748b; padding: 40px 18px; border: 2px dashed #cbd5e1; }
+    .help-box { margin-top: 16px; background: #eff6ff; color: #1e3a8a; border-radius: 16px; padding: 14px; line-height: 1.35; border: 1px solid #bfdbfe; }
     @media (max-width: 880px) { .container { grid-template-columns: 1fr; } header h1 { font-size: 1.6rem; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>📱 Rede Consciente</h1>
-    <p>Crie postagens úteis, verdadeiras e seguras. Antes de postar, pense.</p>
-  </header>
+  <header><h1>📱 Rede Consciente</h1><p>Crie postagens úteis, verdadeiras e seguras. Antes de postar, pense.</p></header>
 
   <section id="loginScreen" class="login-screen">
     <div class="login-card">
       <h2>🔐 Acesso com Google</h2>
-      <p>Para participar da atividade, o aluno precisa entrar com uma conta Google. Depois do login, a página libera postagens, comentários e curtidas.</p>
+      <p>Para participar da atividade, entre com uma conta Google. Depois do login, a criação de postagens será liberada.</p>
       <button class="google-btn" onclick="signInGoogle()">Entrar com Google</button>
-      <div class="config-warning">
-        <strong>Atenção, professora:</strong> este arquivo já está com a configuração do Firebase inserida para o projeto <strong>rede-consciente</strong>. Não é necessário ativar Firestore. Esta versão salva as respostas no navegador e permite exportar em CSV.
-      </div>
-      <div class="github-note">
-        <strong>Para GitHub Pages:</strong> salve este arquivo com o nome <strong>index.html</strong>. Depois de publicar, autorize o domínio <strong>SEU_USUARIO.github.io</strong> no Firebase Authentication.
-      </div>
+      <div class="help-box" style="text-align:left"><strong>Observação:</strong> esta versão não usa Firestore. As postagens ficam salvas neste navegador e podem ser exportadas em CSV.</div>
       <div id="loginMessage" class="alert"></div>
     </div>
   </section>
 
   <section id="authBar" class="auth-bar">
     <div class="auth-box">
-      <div class="user-info">
-        <img id="userPhoto" class="user-photo" alt="Foto do usuário" />
-        <span id="userName">Usuário conectado</span>
-      </div>
+      <div class="user-info"><img id="userPhoto" class="user-photo" alt="Foto do usuário" /><span id="userName">Usuário conectado</span></div>
       <button class="logout-btn" onclick="signOutGoogle()">Sair</button>
     </div>
   </section>
@@ -110,82 +89,27 @@
   <main id="app" class="container">
     <section class="card">
       <h2>✍️ Criar postagem</h2>
-      <small>Atividade: produza um post informativo, cite a fonte e cuide para não expor dados pessoais ou sensíveis. As respostas ficam salvas neste navegador e podem ser exportadas em CSV ao final da atividade.</small>
-
-      <label for="author">Nome do aluno</label>
-      <input id="author" type="text" placeholder="Será preenchido pelo login Google" readonly />
-
-      <label for="topic">Tema pesquisado</label>
-      <input id="topic" type="text" placeholder="Ex.: Crossfit, jogos online, sono e telas" />
-
-      <label for="title">Título do post</label>
-      <input id="title" type="text" placeholder="Ex.: Crossfit é perigoso?" />
-
-      <label for="content">Mensagem principal</label>
-      <textarea id="content" placeholder="Explique a informação com linguagem clara. Evite exageros e fake news."></textarea>
-
-      <label for="source">Fonte consultada</label>
-      <input id="source" type="text" placeholder="Ex.: site de universidade, órgão público, reportagem confiável" />
-
-      <label for="classification">Classificação da informação</label>
-      <select id="classification">
-        <option value="">Selecione</option>
-        <option value="fato">Fato</option>
-        <option value="mito">Mito</option>
-        <option value="parcial">Parcialmente verdade</option>
-      </select>
-
-      <div class="checklist">
-        <h3>✅ Checklist antes de postar</h3>
-        <label class="check-item"><input type="checkbox" id="checkFonte"> A postagem cita uma fonte confiável.</label>
-        <label class="check-item"><input type="checkbox" id="checkClaro"> A linguagem está clara e sem exageros.</label>
-        <label class="check-item"><input type="checkbox" id="checkDados"> Não expõe dados pessoais ou sensíveis.</label>
-        <label class="check-item"><input type="checkbox" id="checkImagem"> A imagem ou ideia respeita direitos autorais.</label>
-      </div>
-
+      <small>Atividade: produza um post informativo, cite a fonte e cuide para não expor dados pessoais ou sensíveis.</small>
+      <label for="author">Nome identificado pelo login</label><input id="author" type="text" readonly />
+      <label for="topic">Tema pesquisado</label><input id="topic" type="text" placeholder="Ex.: Crossfit, jogos online, sono e telas" />
+      <label for="title">Título do post</label><input id="title" type="text" placeholder="Ex.: Crossfit é perigoso?" />
+      <label for="content">Mensagem principal</label><textarea id="content" placeholder="Explique a informação com linguagem clara. Evite exageros e fake news."></textarea>
+      <label for="source">Fonte consultada</label><input id="source" type="text" placeholder="Ex.: site de universidade, órgão público, reportagem confiável" />
+      <label for="classification">Classificação da informação</label><select id="classification"><option value="">Selecione</option><option value="fato">Fato</option><option value="mito">Mito</option><option value="parcial">Parcialmente verdade</option></select>
+      <div class="checklist"><h3>✅ Checklist antes de postar</h3><label class="check-item"><input type="checkbox" id="checkFonte"> A postagem cita uma fonte confiável.</label><label class="check-item"><input type="checkbox" id="checkClaro"> A linguagem está clara e sem exageros.</label><label class="check-item"><input type="checkbox" id="checkDados"> Não expõe dados pessoais ou sensíveis.</label><label class="check-item"><input type="checkbox" id="checkImagem"> A imagem ou ideia respeita direitos autorais.</label></div>
       <button class="btn" onclick="createPost()">🚀 Publicar com responsabilidade</button>
       <button class="btn btn-secondary" onclick="fillExample()">💡 Ver exemplo</button>
+      <button class="btn btn-secondary" onclick="exportCSV()">⬇️ Exportar respostas em CSV</button>
+      <button class="btn btn-danger" onclick="clearAllPosts()">🧹 Limpar feed deste navegador</button>
       <div id="message" class="alert"></div>
-
-      <div class="help-box">
-        <h3>🧠 Regra de ouro</h3>
-        <p><strong>Se não precisa, não compartilhe.</strong><br>Nem toda informação verdadeira deve ser publicada. Dados pessoais e sensíveis precisam de proteção.</p>
-      </div>
+      <div class="help-box"><strong>Regra de ouro:</strong><br>Se não precisa, não compartilhe. Nem toda informação verdadeira deve ser publicada.</div>
     </section>
-
-    <section>
-      <div class="feed-top">
-        <h2>📰 Feed da turma</h2>
-        <span class="badge" id="counter">0 postagens</span>
-      </div>
-      <div id="feed" class="feed">
-        <div class="empty">Nenhuma postagem ainda. Crie o primeiro post consciente da turma.</div>
-      </div>
-    </section>
+    <section><div class="feed-top"><h2>📰 Feed da turma</h2><span class="badge" id="counter">0 postagens</span></div><div id="feed"><div class="empty">Nenhuma postagem ainda. Crie o primeiro post consciente da turma.</div></div></section>
   </main>
 
   <script type="module">
-    /*
-      ARQUIVO PRONTO PARA GITHUB PAGES, SEM FIRESTORE
-      1. Renomeie para index.html.
-      2. Publique no GitHub Pages.
-      3. No Firebase, adicione SEU_USUARIO.github.io em Authentication > Configurações > Domínios autorizados.
-      4. No Firebase, mantenha Authentication > Método de login > Google ativado.
-
-      Observação importante:
-      Esta versão NÃO usa Firestore, porque a criação do banco exigiu faturamento.
-      As postagens ficam salvas no navegador em localStorage.
-      Para recolher as respostas, use o botão "Exportar respostas em CSV" no mesmo computador/navegador em que a atividade foi realizada.
-    */
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithPopup,
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAc_twc3-rncbIVDncXcJZXmu4wTU_Esuo",
@@ -197,104 +121,43 @@
       measurementId: "G-Y73M891QGH"
     };
 
-    const firebaseApp = initializeApp(firebaseConfig);
-    const auth = getAuth(firebaseApp);
+    const appFirebase = initializeApp(firebaseConfig);
+    const auth = getAuth(appFirebase);
     const provider = new GoogleAuthProvider();
-
-    const ALLOWED_EMAIL_DOMAIN = "";
-
     window.currentGoogleUser = null;
-    window.posts = [];
 
-    function showLoginMessage(text, type) {
-      const box = document.getElementById('loginMessage');
-      box.textContent = text;
-      box.className = 'alert ' + type;
-      box.style.display = 'block';
-    }
-
-    window.signInGoogle = async function () {
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (error) {
-        showLoginMessage('Não foi possível fazer login. Confira se o domínio github.io foi autorizado no Firebase.', 'error');
-        console.error(error);
-      }
-    };
-
-    window.signOutGoogle = async function () {
-      try { await signOut(auth); } catch (error) { console.error(error); }
-    };
+    function showLoginMessage(text, type) { const box = document.getElementById('loginMessage'); box.textContent = text; box.className = 'alert ' + type; box.style.display = 'block'; }
+    window.signInGoogle = async function () { try { await signInWithPopup(auth, provider); } catch (error) { console.error(error); showLoginMessage('Não foi possível fazer login. Confira se o domínio luftjacson.github.io está autorizado no Firebase.', 'error'); } };
+    window.signOutGoogle = async function () { await signOut(auth); };
 
     onAuthStateChanged(auth, (user) => {
       const loginScreen = document.getElementById('loginScreen');
       const authBar = document.getElementById('authBar');
       const appArea = document.getElementById('app');
       const authorInput = document.getElementById('author');
-
-      if (user && ALLOWED_EMAIL_DOMAIN && !user.email.endsWith(ALLOWED_EMAIL_DOMAIN)) {
-        showLoginMessage('Este e-mail não está autorizado para responder a atividade.', 'error');
-        signOut(auth);
-        return;
-      }
-
       if (user) {
         window.currentGoogleUser = user;
-        loginScreen.style.display = 'none';
-        authBar.style.display = 'block';
-        appArea.style.display = 'grid';
-        document.getElementById('userName').textContent = `${user.displayName || 'Usuário'} (${user.email})`;
-        const photo = document.getElementById('userPhoto');
-        photo.src = user.photoURL || '';
-        photo.style.display = user.photoURL ? 'block' : 'none';
-        if (authorInput) authorInput.value = user.displayName || user.email || 'Usuário logado';
-        if (window.loadLocalPosts) window.loadLocalPosts();
-        if (window.renderPosts) window.renderPosts();
+        loginScreen.style.display = 'none'; authBar.style.display = 'block'; appArea.style.display = 'grid';
+        document.getElementById('userName').textContent = `${user.displayName || 'Usuário'} (${user.email || ''})`;
+        const photo = document.getElementById('userPhoto'); photo.src = user.photoURL || ''; photo.style.display = user.photoURL ? 'block' : 'none';
+        authorInput.value = user.displayName || user.email || 'Usuário logado';
       } else {
         window.currentGoogleUser = null;
-        loginScreen.style.display = 'flex';
-        authBar.style.display = 'none';
-        appArea.style.display = 'none';
-        if (authorInput) authorInput.value = '';
+        loginScreen.style.display = 'flex'; authBar.style.display = 'none'; appArea.style.display = 'none'; authorInput.value = '';
       }
     });
   </script>
 
   <script>
-    const STORAGE_KEY = 'redeConscientePosts_v1';
+    window.posts = [];
+    const STORAGE_KEY = 'rede_consciente_posts_v1';
 
-    function loadLocalPosts() {
-      try {
-        window.posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      } catch (error) {
-        console.error(error);
-        window.posts = [];
-      }
-    }
-
-    function saveLocalPosts() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(window.posts || []));
-    }
-
-    function showMessage(text, type) {
-      const box = document.getElementById('message');
-      box.textContent = text;
-      box.className = 'alert ' + type;
-      box.style.display = 'block';
-      setTimeout(() => { box.style.display = 'none'; }, 4500);
-    }
+    function showMessage(text, type) { const box = document.getElementById('message'); box.textContent = text; box.className = 'alert ' + type; box.style.display = 'block'; setTimeout(() => { box.style.display = 'none'; }, 5000); }
+    function saveLocalPosts() { localStorage.setItem(STORAGE_KEY, JSON.stringify(window.posts || [])); }
+    function loadLocalPosts() { try { window.posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch (e) { window.posts = []; } renderPosts(); }
 
     function detectRisk(text) {
-      /*
-        Detecção mais cuidadosa de dados pessoais.
-        Antes, a busca simples por "rg" gerava falso alerta em palavras como "órgão".
-        Agora, usamos padrões com limites de palavra e normalização de acentos.
-      */
-      const normalized = text
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase();
-
+      const normalized = String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
       const patterns = [
         { label: 'CPF', regex: /\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/ },
         { label: 'RG', regex: /\brg\b|\bregistro geral\b/ },
@@ -308,10 +171,7 @@
         { label: 'documento', regex: /\bnumero do documento\b|\bdocumento pessoal\b/ },
         { label: 'e-mail pessoal', regex: /\be-mail pessoal\b|\bemail pessoal\b/ }
       ];
-
-      return patterns
-        .filter(item => item.regex.test(normalized))
-        .map(item => item.label);
+      return patterns.filter(item => item.regex.test(normalized)).map(item => item.label);
     }
 
     function createPost() {
@@ -324,180 +184,34 @@
       const source = document.getElementById('source').value.trim();
       const classification = document.getElementById('classification').value;
       const checks = ['checkFonte','checkClaro','checkDados','checkImagem'].map(id => document.getElementById(id).checked);
-
       if (!author || !topic || !title || !content || !source || !classification) { showMessage('⚠️ Complete todos os campos antes de publicar.', 'error'); return; }
       if (!checks.every(Boolean)) { showMessage('⚠️ Revise o checklist. Uma postagem responsável precisa passar por todos os critérios.', 'error'); return; }
       const risks = detectRisk(content + ' ' + title);
       if (risks.length > 0) { showMessage('🚨 Atenção: sua postagem parece conter dado pessoal ou sensível: ' + risks.join(', ') + '. Revise antes de publicar.', 'error'); return; }
-
-      const post = {
-        id: String(Date.now()),
-        author,
-        authorEmail: user.email || '',
-        topic,
-        title,
-        content,
-        source,
-        classification,
-        likes: 0,
-        comments: [],
-        time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
-      };
-
-      window.posts.unshift(post);
-      saveLocalPosts();
-      renderPosts();
-      clearForm();
-      showMessage('✅ Post publicado neste navegador. Ao final, use “Exportar respostas em CSV”.', 'ok');
+      const post = { id: String(Date.now()), author, authorEmail: user.email || '', topic, title, content, source, classification, likes: 0, comments: [], time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) };
+      window.posts.unshift(post); saveLocalPosts(); renderPosts(); clearForm(); showMessage('✅ Post publicado neste navegador. Ao final, use “Exportar respostas em CSV”.', 'ok');
     }
 
-    function clearForm() {
-      ['topic','title','content','source'].forEach(id => document.getElementById(id).value = '');
-      if (window.currentGoogleUser) document.getElementById('author').value = window.currentGoogleUser.displayName || window.currentGoogleUser.email || '';
-      document.getElementById('classification').value = '';
-      ['checkFonte','checkClaro','checkDados','checkImagem'].forEach(id => document.getElementById(id).checked = false);
-    }
-
-    function fillExample() {
-      document.getElementById('author').value = window.currentGoogleUser ? (window.currentGoogleUser.displayName || window.currentGoogleUser.email) : 'Equipe Verifica';
-      document.getElementById('topic').value = 'Uso de telas e sono';
-      document.getElementById('title').value = 'Usar telas à noite pode atrapalhar o sono?';
-      document.getElementById('content').value = 'Pesquisas indicam que o uso excessivo de telas antes de dormir pode prejudicar o sono. Por isso, é importante reduzir o tempo de tela à noite e buscar hábitos mais saudáveis.';
-      document.getElementById('source').value = 'Fonte confiável pesquisada pelo grupo: site de saúde, universidade ou órgão público.';
-      document.getElementById('classification').value = 'fato';
-      ['checkFonte','checkClaro','checkDados','checkImagem'].forEach(id => document.getElementById(id).checked = true);
-      showMessage('💡 Exemplo preenchido. Você pode editar antes de publicar.', 'ok');
-    }
-
-    function labelForClassification(value) {
-      if (value === 'fato') return '<span class="tag fato">✅ Fato</span>';
-      if (value === 'mito') return '<span class="tag mito">❌ Mito</span>';
-      return '<span class="tag parcial">⚠️ Parcialmente verdade</span>';
-    }
-
-    function teacherAnalysis(post) {
-      const text = ((post.title || '') + ' ' + (post.content || '')).toLowerCase();
-      let notes = [];
-      if (text.includes('sempre') || text.includes('nunca') || text.includes('todo mundo') || text.includes('absurdo')) notes.push('⚠️ Verifique se há linguagem exagerada ou generalização.');
-      if ((post.source || '').length < 12) notes.push('🔎 A fonte precisa ser mais específica.');
-      if ((post.content || '').length < 80) notes.push('✍️ A explicação pode ser mais desenvolvida.');
-      if (notes.length === 0) notes.push('✅ A postagem apresenta boa organização inicial. Agora confira se a fonte é realmente confiável.');
-      return notes.map(n => '<div>' + n + '</div>').join('');
-    }
+    function clearForm() { ['topic','title','content','source'].forEach(id => document.getElementById(id).value = ''); if (window.currentGoogleUser) document.getElementById('author').value = window.currentGoogleUser.displayName || window.currentGoogleUser.email || ''; document.getElementById('classification').value = ''; ['checkFonte','checkClaro','checkDados','checkImagem'].forEach(id => document.getElementById(id).checked = false); }
+    function fillExample() { if (window.currentGoogleUser) document.getElementById('author').value = window.currentGoogleUser.displayName || window.currentGoogleUser.email || ''; document.getElementById('topic').value = 'Uso de telas e sono'; document.getElementById('title').value = 'Usar telas à noite pode atrapalhar o sono?'; document.getElementById('content').value = 'Pesquisas indicam que o uso excessivo de telas antes de dormir pode prejudicar o sono. Por isso, é importante reduzir o tempo de tela à noite e buscar hábitos mais saudáveis.'; document.getElementById('source').value = 'Fonte confiável pesquisada pelo grupo: site de saúde, universidade ou órgão público.'; document.getElementById('classification').value = 'fato'; ['checkFonte','checkClaro','checkDados','checkImagem'].forEach(id => document.getElementById(id).checked = true); showMessage('💡 Exemplo preenchido. Você pode editar antes de publicar.', 'ok'); }
+    function labelForClassification(value) { if (value === 'fato') return '<span class="tag fato">✅ Fato</span>'; if (value === 'mito') return '<span class="tag mito">❌ Mito</span>'; return '<span class="tag parcial">⚠️ Parcialmente verdade</span>'; }
+    function teacherAnalysis(post) { const text = ((post.title || '') + ' ' + (post.content || '')).toLowerCase(); const notes = []; if (text.includes('sempre') || text.includes('nunca') || text.includes('todo mundo') || text.includes('absurdo')) notes.push('⚠️ Verifique se há linguagem exagerada ou generalização.'); if ((post.source || '').length < 12) notes.push('🔎 A fonte precisa ser mais específica.'); if ((post.content || '').length < 80) notes.push('✍️ A explicação pode ser mais desenvolvida.'); if (notes.length === 0) notes.push('✅ A postagem apresenta boa organização inicial. Agora confira se a fonte é realmente confiável.'); return notes.map(n => '<div>' + n + '</div>').join(''); }
 
     function renderPosts() {
-      const posts = window.posts || [];
-      const feed = document.getElementById('feed');
-      const counter = document.getElementById('counter');
+      const posts = window.posts || []; const feed = document.getElementById('feed'); const counter = document.getElementById('counter');
       counter.textContent = posts.length === 1 ? '1 postagem' : posts.length + ' postagens';
-      if (posts.length === 0) {
-        feed.innerHTML = '<div class="empty">Nenhuma postagem ainda. Crie o primeiro post consciente da turma.</div>';
-        return;
-      }
-      feed.innerHTML = posts.map(post => `
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">${escapeHtml((post.author || 'A').charAt(0).toUpperCase())}</div>
-            <div>
-              <div class="post-user">${escapeHtml(post.author || 'Aluno')}</div>
-              <div class="post-time">${escapeHtml(post.authorEmail || '')} • Publicado em ${escapeHtml(post.time || '')}</div>
-            </div>
-          </div>
-          <div class="post-topic"># ${escapeHtml(post.topic || '')}</div>
-          <h3 class="post-title">${escapeHtml(post.title || '')}</h3>
-          <p class="post-text">${escapeHtml(post.content || '')}</p>
-          <div class="source-box"><strong>Fonte consultada:</strong> ${escapeHtml(post.source || '')}</div>
-          <div class="analysis-line">${labelForClassification(post.classification)}<span class="tag safe">🔐 Sem dados pessoais aparentes</span></div>
-          <div class="teacher-panel"><strong>Modo Professor Tec:</strong>${teacherAnalysis(post)}</div>
-          <div class="actions">
-            <button class="action-btn" onclick="likePost('${post.id}')">❤️ Curtir (${post.likes || 0})</button>
-            <button class="action-btn" onclick="toggleComment('${post.id}')">💬 Comentar</button>
-            <button class="action-btn" onclick="removePost('${post.id}', '${escapeForJs(post.authorEmail || '')}')">🗑️ Apagar</button>
-          </div>
-          <div class="comment-area" id="comment-${post.id}">
-            <input id="comment-input-${post.id}" type="text" placeholder="Escreva um comentário respeitoso ou uma pergunta de checagem..." />
-            <button class="btn btn-secondary" onclick="addComment('${post.id}')">Enviar comentário</button>
-            <div class="comment-list">${(post.comments || []).map(c => '<div class="comment">💬 <strong>' + escapeHtml(c.author || 'Aluno') + ':</strong> ' + escapeHtml(c.text || '') + '</div>').join('')}</div>
-          </div>
-        </article>`).join('');
+      if (posts.length === 0) { feed.innerHTML = '<div class="empty">Nenhuma postagem ainda. Crie o primeiro post consciente da turma.</div>'; return; }
+      feed.innerHTML = posts.map(post => `<article class="post"><div class="post-header"><div class="avatar">${escapeHtml((post.author || 'A').charAt(0).toUpperCase())}</div><div><div class="post-user">${escapeHtml(post.author || 'Aluno')}</div><div class="post-time">${escapeHtml(post.authorEmail || '')} • Publicado em ${escapeHtml(post.time || '')}</div></div></div><div class="post-topic"># ${escapeHtml(post.topic || '')}</div><h3 class="post-title">${escapeHtml(post.title || '')}</h3><p class="post-text">${escapeHtml(post.content || '')}</p><div class="source-box"><strong>Fonte consultada:</strong> ${escapeHtml(post.source || '')}</div><div class="analysis-line">${labelForClassification(post.classification)}<span class="tag safe">🔐 Sem dados pessoais aparentes</span></div><div class="teacher-panel"><strong>Modo Professor Tec:</strong>${teacherAnalysis(post)}</div><div class="actions"><button class="action-btn" onclick="likePost('${post.id}')">❤️ Curtir (${post.likes || 0})</button><button class="action-btn" onclick="toggleComment('${post.id}')">💬 Comentar</button><button class="action-btn" onclick="removePost('${post.id}', '${escapeForJs(post.authorEmail || '')}')">🗑️ Apagar</button></div><div class="comment-area" id="comment-${post.id}"><input id="comment-input-${post.id}" type="text" placeholder="Escreva um comentário respeitoso ou uma pergunta de checagem..." /><button class="btn btn-secondary" onclick="addComment('${post.id}')">Enviar comentário</button><div class="comment-list">${(post.comments || []).map(c => '<div class="comment">💬 <strong>' + escapeHtml(c.author || 'Aluno') + ':</strong> ' + escapeHtml(c.text || '') + '</div>').join('')}</div></div></article>`).join('');
     }
 
-    function likePost(id) {
-      if (!window.currentGoogleUser) { showMessage('⚠️ Faça login para curtir.', 'error'); return; }
-      const post = (window.posts || []).find(p => p.id === id);
-      if (post) post.likes = (post.likes || 0) + 1;
-      saveLocalPosts();
-      renderPosts();
-    }
-
-    function toggleComment(id) {
-      const area = document.getElementById('comment-' + id);
-      if (area) area.style.display = area.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function addComment(id) {
-      if (!window.currentGoogleUser) { showMessage('⚠️ Faça login com Google antes de comentar.', 'error'); return; }
-      const input = document.getElementById('comment-input-' + id);
-      const text = input.value.trim();
-      if (!text) return;
-      const user = window.currentGoogleUser;
-      const post = (window.posts || []).find(p => p.id === id);
-      if (post) {
-        post.comments.push({ author: user.displayName || user.email || 'Usuário logado', email: user.email || '', text, time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) });
-        saveLocalPosts();
-        renderPosts();
-        setTimeout(() => toggleComment(id), 0);
-      }
-    }
-
-    function removePost(id, authorEmail) {
-      if (!window.currentGoogleUser) { showMessage('⚠️ Faça login antes de apagar.', 'error'); return; }
-      if (window.currentGoogleUser.email !== authorEmail) {
-        alert('Apenas o autor da postagem pode apagar esta resposta nesta versão sem banco de dados.');
-        return;
-      }
-      if (!confirm('Tem certeza que deseja apagar esta postagem?')) return;
-      window.posts = (window.posts || []).filter(p => p.id !== id);
-      saveLocalPosts();
-      renderPosts();
-    }
-
-    function exportCSV() {
-      const posts = window.posts || [];
-      if (posts.length === 0) { showMessage('⚠️ Não há respostas para exportar.', 'error'); return; }
-      const rows = [["data_hora","nome","email","tema","titulo","mensagem","fonte","classificacao","curtidas","comentarios"]];
-      posts.forEach(post => {
-        const comments = (post.comments || []).map(c => `${c.author || ''}: ${c.text || ''}`).join(' | ');
-        rows.push([post.time || '', post.author || '', post.authorEmail || '', post.topic || '', post.title || '', post.content || '', post.source || '', post.classification || '', String(post.likes || 0), comments]);
-      });
-      const csv = rows.map(row => row.map(value => '"' + String(value).replaceAll('"','""') + '"').join(';')).join('
-');
-      const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'respostas_rede_consciente.csv';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showMessage('✅ Arquivo CSV gerado.', 'ok');
-    }
-
-    function clearAllPosts() {
-      if (!confirm('Isso apagará as postagens salvas neste navegador. Deseja continuar?')) return;
-      window.posts = [];
-      saveLocalPosts();
-      renderPosts();
-      showMessage('✅ Feed limpo neste navegador.', 'ok');
-    }
-
-    function escapeHtml(text) {
-      return String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-    }
-
-    function escapeForJs(text) {
-      return String(text).replaceAll('\', '\\').replaceAll("'", "\'");
-    }
-
+    function likePost(id) { if (!window.currentGoogleUser) { showMessage('⚠️ Faça login para curtir.', 'error'); return; } const post = (window.posts || []).find(p => p.id === id); if (post) post.likes = (post.likes || 0) + 1; saveLocalPosts(); renderPosts(); }
+    function toggleComment(id) { const area = document.getElementById('comment-' + id); if (area) area.style.display = area.style.display === 'block' ? 'none' : 'block'; }
+    function addComment(id) { if (!window.currentGoogleUser) { showMessage('⚠️ Faça login com Google antes de comentar.', 'error'); return; } const input = document.getElementById('comment-input-' + id); const text = input.value.trim(); if (!text) return; const user = window.currentGoogleUser; const post = (window.posts || []).find(p => p.id === id); if (post) { post.comments.push({ author: user.displayName || user.email || 'Usuário logado', email: user.email || '', text, time: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) }); saveLocalPosts(); renderPosts(); setTimeout(() => toggleComment(id), 0); } }
+    function removePost(id, authorEmail) { if (!window.currentGoogleUser) { showMessage('⚠️ Faça login antes de apagar.', 'error'); return; } if (window.currentGoogleUser.email !== authorEmail) { alert('Apenas o autor da postagem pode apagar esta resposta.'); return; } if (!confirm('Tem certeza que deseja apagar esta postagem?')) return; window.posts = (window.posts || []).filter(p => p.id !== id); saveLocalPosts(); renderPosts(); }
+    function exportCSV() { const posts = window.posts || []; if (posts.length === 0) { showMessage('⚠️ Não há respostas para exportar.', 'error'); return; } const rows = [["data_hora","nome","email","tema","titulo","mensagem","fonte","classificacao","curtidas","comentarios"]]; posts.forEach(post => { const comments = (post.comments || []).map(c => `${c.author || ''}: ${c.text || ''}`).join(' | '); rows.push([post.time || '', post.author || '', post.authorEmail || '', post.topic || '', post.title || '', post.content || '', post.source || '', post.classification || '', String(post.likes || 0), comments]); }); const csv = rows.map(row => row.map(value => '"' + String(value).replaceAll('"','""') + '"').join(';')).join('\n'); const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'respostas_rede_consciente.csv'; document.body.appendChild(link); link.click(); document.body.removeChild(link); showMessage('✅ Arquivo CSV gerado.', 'ok'); }
+    function clearAllPosts() { if (!confirm('Isso apagará as postagens salvas neste navegador. Deseja continuar?')) return; window.posts = []; saveLocalPosts(); renderPosts(); showMessage('✅ Feed limpo neste navegador.', 'ok'); }
+    function escapeHtml(text) { return String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;'); }
+    function escapeForJs(text) { return String(text).replaceAll('\\', '\\\\').replaceAll("'", "\\'"); }
     loadLocalPosts();
   </script>
 </body>
